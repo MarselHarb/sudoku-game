@@ -25,7 +25,22 @@ public class Puzzle {
                  numbers[row][col]=gridExample[row][col];
              }
         }
+            boolean [][] hardcoded =
+                    {{true, true, true, true, true, false, true, true, true},
+                            {true, true, true, true, true, true, true, true, false},
+                            {true, true, true, true, true, true, true, true, true},
+                            {true, true, true, true, true, true, false, true, true},
+                            {true, true, true, true, true, true, true, true, true},
+                            {true, true, false, true, true, true, true, true, true},
+                            {true, true, true, true, true, true, true, true, true},
+                            {true, true, true, true, true, false, true, true, true},
+                            {true, true, true, true, true, true, true, true, true}};
 
+        for (int row = 0; row< SudokuConstants.GRID_SIZE; row++){
+            for (int col = 0; col< SudokuConstants.GRID_SIZE; col ++){
+                isGiven[row][col] = hardcoded[row][col];
+            }
+        }
 
 
     }

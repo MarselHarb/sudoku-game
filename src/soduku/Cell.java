@@ -14,7 +14,7 @@ public class Cell extends JTextField{
     public static final Color FOREGROUND_NOT_Given =Color.GRAY;
     public static final Color BACKGROUND_Correct = new Color(0,216,0);
     public static final Color BACKGROUND_Wrong = new Color (216,0,0);
-    public static final Font FONT_Numbers = new Font("OCR A Extenede",Font.PLAIN,28);
+    public static final Font FONT_Numbers = new Font("OCR A Exteneded",Font.PLAIN,28);
 
     int row,col;
     int number;
