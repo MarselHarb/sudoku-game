@@ -2,7 +2,9 @@ package soduku;
 
 
 import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 import java.awt.*;
+import java.awt.event.*;
 
 public class GameBoardPanel extends JPanel {
     /* private static final long serialVersionUID = 1L;
@@ -26,10 +28,19 @@ public class GameBoardPanel extends JPanel {
             }
 
         }
-        cells [0][0].status= CellStatus.GIVEN;
-            /* common listener input here
-            add common listener to all editable cells
-             */
+        KeyInputListener keyListener = new KeyInputListener();
+        MouseInputListener mouseListener = new MouseInputListener();
+
+        for (int row =0; row<SudokuConstants.GRID_SIZE; ++row){
+            for (int col = 0; col<SudokuConstants.GRID_SIZE; ++col){
+                if (cells[row][col].isEditable()){
+                    cells[row][col].addKeyListener(keyListener);
+                    cells[row][col].addMouseListener(mouseListener);
+
+                }
+            }
+        }
+
 
         super.setPreferredSize(new Dimension(BOARD_WIDTH,BOARD_HEIGHT));
     }
@@ -60,4 +71,49 @@ public class GameBoardPanel extends JPanel {
 
     //define a listener Inner class for all the editable cells
 
+    public static class KeyInputListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+            // Handle key typed event
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+
+        }
+    }
+    // Define a MouseListener Inner class for all the editable cells
+    public static class MouseInputListener implements MouseListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            Cell sourceCell = (Cell) e.getSource();
+            System.out.println("Cell clicked: " + sourceCell.getText());
+            // You can add additional logic for mouse click if needed
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            // Handle mouse pressed event
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            // Handle mouse released event
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // Handle mouse entered event
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // Handle mouse exited event
+        }
+    }
 }
