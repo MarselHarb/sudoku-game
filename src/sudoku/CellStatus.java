@@ -1,8 +1,8 @@
-package soduku;
+package sudoku;
 
 public enum CellStatus {
     GIVEN(),
     GUESS(),
     CORRECT(),
-    WRONG();
+    WRONG()
 }
