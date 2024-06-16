@@ -1,23 +1,30 @@
 package sudoku;
 
 
-import java.awt.Color;
+
 import java.awt.Font;
+import java.io.Serial;
 import javax.swing.JTextField;
 
 public class Cell extends JTextField {
+    @Serial
     private static final long serialVersionUID = 1L; // to prevent serial warning
 
-    public static final Color BACKGROUND_Given = new Color(240, 240, 240);
-    public static final Color FOREGROUND_Given = Color.BLACK;
-    public static final Color BACKGROUND_Guess = Color.YELLOW;
-    public static final Color FOREGROUND_NOT_Given = Color.GRAY;
-    public static final Color BACKGROUND_Correct = new Color(0, 216, 0);
-    public static final Color BACKGROUND_Wrong = new Color(216, 0, 0);
+
     public static final Font FONT_Numbers = new Font("OCR A Extended", Font.PLAIN, 28);
 
     int row, col;
+
+    public int getNumber() {
+        return number;
+    }
+
     int number;
+
+    public void setStatus(CellStatus status) {
+        this.status = status;
+    }
+
     CellStatus status;
 
     public Cell(int row, int col) {
@@ -35,20 +42,13 @@ public class Cell extends JTextField {
     }
 
     public void paint() {
-        if (status == CellStatus.GIVEN) {
-            super.setText(number + "");
-            super.setEditable(false);
-            super.setBackground(BACKGROUND_Given);
-            super.setForeground(FOREGROUND_Given);
-        } else if (status == CellStatus.GUESS) {
-            super.setText("");
-            super.setEditable(true);
-            super.setBackground(BACKGROUND_Guess);
-            super.setForeground(FOREGROUND_NOT_Given);
-        } else if (status == CellStatus.CORRECT) {
-            super.setBackground(BACKGROUND_Correct);
-        } else if (status == CellStatus.WRONG) {
-            super.setBackground(BACKGROUND_Wrong);
+        if(status.equals(CellStatus.GIVEN)){
+            super.setText(String.valueOf(number));
         }
+
+            super.setEditable(status.isEditable());
+            super.setBackground(status.getBackgroundColor());
+            super.setForeground(status.getForegroundColor());
+
     }
 }

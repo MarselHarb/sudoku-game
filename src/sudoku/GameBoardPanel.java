@@ -2,6 +2,7 @@ package sudoku;
 
 
 import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.Serial;
@@ -14,8 +15,8 @@ public class GameBoardPanel extends JPanel {
     public static final int BOARD_WIDTH = CELL_SIZE * SudokuConstants.GRID_SIZE;
     public static final int BOARD_HEIGHT = CELL_SIZE * SudokuConstants.GRID_SIZE;
 
-    private Cell[][] cells = new Cell[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
-    private Puzzle puzzle = new Puzzle();
+    private final Cell[][] cells = new Cell[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
+    private final Puzzle puzzle = new Puzzle();
 
     public GameBoardPanel() {
         super.setLayout(new BorderLayout());
@@ -67,6 +68,22 @@ public class GameBoardPanel extends JPanel {
     }
 
     public boolean isSolved() {
+//TODO transfer to streams ( 2d arrays to 1d and find wrong)
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                Cell cell = cells[row][col];
+                if(cell.status.equals(CellStatus.GIVEN))
+                    continue;
+                if(cell.getText().equals(String.valueOf(cell.getNumber()))){
+                    cell.setStatus(CellStatus.CORRECT);
+                } else {
+                    cell.setStatus(CellStatus.WRONG);
+                }
+                cell.paint();
+
+            }
+        }
+        //TODO transfer to streams ( 2d arrays to 1d and find wrong)
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
                 if (cells[row][col].status == CellStatus.GUESS || cells[row][col].status == CellStatus.WRONG) {
@@ -99,17 +116,21 @@ public class GameBoardPanel extends JPanel {
                 System.out.println("You entered " + numberIn);
                 sourceCell.setText(inputText);
 
-                if (numberIn == sourceCell.number) {
-                    sourceCell.status = CellStatus.CORRECT;
-                } else{
-                    sourceCell.status = CellStatus.WRONG;
-                }
-                sourceCell.paint();
-                e.consume();
+//                if (numberIn == sourceCell.number) {
+//                    sourceCell.status = CellStatus.CORRECT;
+//                } else{
+//                    sourceCell.status = CellStatus.WRONG;
+//                }
+
+
             } else {
                 System.out.println("Invalid input");
-                sourceCell.setText("");
+                sourceCell.setStatus(CellStatus.GUESS);
+
             }
+            sourceCell.paint();
+
+            e.consume();
         }
 
         @Override
